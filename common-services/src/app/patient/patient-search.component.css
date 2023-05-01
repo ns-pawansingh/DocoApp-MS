@@ -1,0 +1,14 @@
+.example-full-width{
+  width: 100%;
+}
+
+  @media (max-width: 768px) {
+    .parent {
+      flex-direction: column;
+    }
+  
+    .left, .right {
+      flex: none;
+      width: 100%;
+    }
+  }

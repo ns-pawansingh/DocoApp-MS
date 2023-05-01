@@ -1,0 +1,29 @@
+<div class="parent" style="display: flex;">
+    <div class="left" style="flex: 1; border: solid; border-color: rgb(189, 110, 8);">
+        <div>
+            <mat-form-field class="example-full-width" >
+                <mat-label>Search Patient</mat-label>
+                <input type="text" placeholder="Select Patient" aria-label="Patient" matInput [formControl]="myControl"
+                    [matAutocomplete]="auto">
+
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="optionSelected($event)">
+                    <mat-option *ngFor="let patient of filteredOptions | async"
+                        [value]="patient.patientName +'-'+ patient.phone">
+                        {{patient.patientName}} - {{patient.phone}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <div class="example-full-width" *ngIf="showHistory">
+            <app-patient-history [displayedColumns]="['historyId', 'lastVisit', 'healthDetails', 'action']" [patientHistory]="patientHistory" (showHistoryDetail)="viewHistoryDetails($event)"></app-patient-history>
+        </div>
+    </div>
+    <ng-template #nonDetails>
+        <div class="right" style="flex: 2">
+        </div>
+    </ng-template>
+
+    <div class="right" *ngIf="showHistoryDetail; else nonDetails" style="flex: 2; border: solid; border-color: rgb(168, 98, 6);">
+        <app-patient-details [currentPatient]="currentPatient" [selectedHistory]="selectedHistory" (addNewPrescriptions)="addNewPrescriptions()"></app-patient-details>
+    </div>
+</div>

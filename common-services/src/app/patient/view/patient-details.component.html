@@ -1,0 +1,67 @@
+<div #printAble>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>{{currentPatient.patientName}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+
+            <div style="width: 60%; float:left">
+                <div>
+                    <label>Age</label>: {{currentPatient.age}}
+                </div>
+                <div>
+                    <label>Gender</label>: {{currentPatient.gender}}
+                </div>
+                <div>
+                    <label>Phone</label>: {{currentPatient.phone}}
+                </div>
+                <div>
+                    <label>Address</label>: {{currentPatient.address}}
+                </div>
+            </div>
+
+            <div style="width: 40%; float:right;">
+                <div *ngFor="let measure of selectedHistory.healthMeasurements">
+                    <label>{{measure.key}}</label>:
+                    {{measure.value}}
+                </div>
+            </div>
+        </mat-card-content>
+        <hr>
+        <mat-card-header>
+            <mat-card-title>Prescriptions</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div *ngFor="let medicine of selectedHistory.medicines">
+                <label class="madicine-name">{{medicine.name}} </label>{{medicine.dose}} <label
+                    class="madicine-notes">{{medicine.notes}}</label>
+            </div>
+
+        </mat-card-content>
+
+<div *ngIf="showNewPresc === true">
+    <hr>
+    <mat-card-header>
+        <mat-card-title>{{today | date:'medium'}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div *ngFor="let newPres of newPrescribedMedicines">
+            <label class="madicine-name">{{newPres.name}} </label>{{newPres.dose}} <label
+                class="madicine-notes">{{newPres.notes}}</label>
+        </div>
+    </mat-card-content>
+</div>
+
+        <ng-template [ngIf]="addNewMedicine === true">
+            <app-new-prescriptions (saveMedicineInNewPrescription)="saveAndPrintPresription($event)"
+                (selctedMedicineEvent)="selctedMedicineEvent($event)"></app-new-prescriptions>
+        </ng-template>
+    </mat-card>
+</div>
+<div>
+    <button (click)="print()">Print and download</button>
+</div>
+
+<div>
+    <button (click)="addNewPrescription()">Add New Prescriptions</button>
+</div>

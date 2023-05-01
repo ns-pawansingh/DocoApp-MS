@@ -1,0 +1,32 @@
+
+  <table mat-table [dataSource]="patientHistory">
+    <!-- Name Column -->
+    <ng-container matColumnDef="historyId">
+      <th mat-header-cell *matHeaderCellDef> Visit No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.historyId}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="lastVisit">
+      <th mat-header-cell *matHeaderCellDef> Visit Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.lastVisit}} </td>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="healthDetails">
+      <th mat-header-cell *matHeaderCellDef> Health Conditoin </th>
+      <td mat-cell *matCellDef="let element"> {{element.healthDetails}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row;">
+        <button mat-icon-button (click)="viewHistoryDetail(row)">
+          <mat-icon>launch</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>

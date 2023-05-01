@@ -1,0 +1,42 @@
+<div class="main-menu">
+  <div class="sideNav-menu">
+    <div [ngStyle]="style" class="sidenav">
+      <a class="closebtn" (click)="closeNav()">&times;</a>
+      <a (click)="transportMenu('about')">About</a>
+      <a (click)="transportMenu('services')">Services</a>
+      <a (click)="transportMenu('clients')">Clients</a>
+      <a (click)="transportMenu('contact')">Contact</a>
+    </div>
+  </div>
+  <div [ngStyle]="navStyle">
+    <div>
+      <nav>
+        <ul>
+          <li>
+            <a class="menu-button navButton" (click)="openNav()">&#9776;</a>
+          </li>
+          <li>
+            <a class="menu-button" mat-button (click)="openPatientMenu()">Patient</a>
+          </li>
+          <li>
+            <a class="menu-button" mat-button (click)="openMedicineMenu()">Medicines</a>
+          </li>
+          <li>
+            <a class="menu-button" mat-button (click)="openAppointmentMenu()">Appointment</a>
+          </li>
+          <li>
+            <a class="menu-button" mat-button (click)="openReportMenu()">Report</a>
+          </li>
+        </ul>
+
+      </nav>
+    </div>
+    <div class="tile-body">
+      <ng-component></ng-component>
+    </div>
+    <div class="tile-footer">
+      <app-footer></app-footer>
+    </div>
+
+  </div>
+</div>
