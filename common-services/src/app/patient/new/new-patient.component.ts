@@ -46,6 +46,4 @@ export class NewPatientComponent implements OnInit {
       console.log(data);
     } );
   }
-
-  
 }

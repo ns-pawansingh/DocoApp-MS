@@ -74,6 +74,7 @@ export class NewPrescriptionsComponent {
 
   saveAndPrintPresription(){
     const newPresc = {...this.newPrescriptions};
+    console.log(newPresc);
     this.saveMedicineInNewPrescription.emit(newPresc);
     this.newPrescriptions.medicines = [];
   }

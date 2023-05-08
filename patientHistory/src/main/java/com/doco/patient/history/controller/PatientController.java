@@ -39,13 +39,11 @@ public class PatientController {
         patientService.save(patientDetail);
         return Constant.CREATE_SUCCESS;
     }
-
     @PostMapping("/update")
     public String update(@RequestBody PatientHistory patientDetail) {
         patientService.save(patientDetail);
         return Constant.CREATE_SUCCESS;
     }
-
     @GetMapping("/api/info")
     public List<APIFormat> getAPIDetails() {
         return allAPIs();

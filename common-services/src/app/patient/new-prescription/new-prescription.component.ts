@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Patient, PatientHistory, PatientMedicine, Prescription } from '../search/patient-search.component';
+import { HealthMeasurement, Patient, PatientHistory, PatientMedicine, Prescription } from '../search/patient-search.component';
+import { PatientService } from '../../patient-service/patient.service';
 
 @Component({
   selector: 'app-new-prescription',
@@ -8,10 +9,12 @@ import { Patient, PatientHistory, PatientMedicine, Prescription } from '../searc
 })
 export class NewPrescriptionComponent {
 
-  
+  constructor(private patientService: PatientService){}
+
   @Input('currentPatient')
   currentPatient!: Patient;
   newHistory: PatientHistory | undefined;
+  healthMeasures: HealthMeasurement[] = [];
   ngOnInit(): void {
     const storedCurrentPatient = sessionStorage.getItem("currentPatient");
     this.currentPatient = storedCurrentPatient == null ? null : JSON.parse(storedCurrentPatient);
@@ -23,9 +26,8 @@ export class NewPrescriptionComponent {
   saveAndPrintPresription(newPrescriptions: Prescription){
     if(this.newHistory === undefined){
       this.newHistory = {
-        historyId: 0,
         patientId: this.currentPatient?.patientId,
-        lastVisit: new Date().toString(),
+        lastVisit: new Date().toISOString(),
         healthDetails: "",
         notes:"",
         prescriptions: [],
@@ -36,6 +38,11 @@ export class NewPrescriptionComponent {
     }else{
       this.newHistory.prescriptions = [newPrescriptions];
     }
+    delete this.newHistory.prescriptions[0].prescId;
+    this.newHistory.prescriptions[0].healthMeasurements = this.healthMeasures;
+    this.patientService.saveUpdatePatientHistory(JSON.stringify(this.newHistory)).subscribe(res =>{
+
+    })
   }
 
 

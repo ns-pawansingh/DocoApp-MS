@@ -1,11 +1,14 @@
 <div #printAble>
     <mat-card>
+        <div>
+            <img cImg height="100" rounded src="assets/image/header.jpg" thumbnail width="100%" />
+        </div>
         <mat-card-header>
             <mat-card-title>{{currentPatient.patientName}}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <app-personal-details [currentPatient]="currentPatient"></app-personal-details>
-            <app-health-measures [healthMeasures]="[]" (healthMeasureFormGroupData)="healthMeasureFormGroupData($event)"></app-health-measures>
+            <app-health-measures [healthMeasures]="healthMeasures" (healthMeasureFormGroupData)="healthMeasureFormGroupData($event)"></app-health-measures>
         </mat-card-content>
         <mat-card-content>
             <div *ngFor="let presc of newHistory?.prescriptions">
@@ -20,7 +23,6 @@
                 </div>
             </div>
         </mat-card-content>
-
         <div>
             <app-prescription-add (saveMedicineInNewPrescription)="saveAndPrintPresription($event)"
                 (selctedMedicineEvent)="selctedMedicineEvent($event)"></app-prescription-add>

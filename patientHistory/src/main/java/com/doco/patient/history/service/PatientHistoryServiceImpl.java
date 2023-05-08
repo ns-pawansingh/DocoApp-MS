@@ -3,10 +3,13 @@ package com.doco.patient.history.service;
 import com.doco.patient.history.dao.PatientHistoryDao;
 import com.doco.patient.history.model.PatientHistory;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.boot.model.source.spi.Sortable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -18,7 +21,7 @@ public class PatientHistoryServiceImpl implements PatientHistoryService {
     @Override
     @Transactional
     public PatientHistory getPatientLastHistory(Long patientId) {
-        return patientHistoryDao.findByPatientId(patientId).get(0);
+        return patientHistoryDao.findByPatientId(patientId, Sort.by(Sort.Direction.DESC, "historyId")).get(0);
     }
 
     @Override
@@ -30,7 +33,7 @@ public class PatientHistoryServiceImpl implements PatientHistoryService {
     @Override
     @Transactional
     public List<PatientHistory> getAllHistory(Long patientId) {
-        return patientHistoryDao.findByPatientId(patientId);
+        return patientHistoryDao.findByPatientId(patientId, Sort.by(Sort.Direction.ASC, "historyId"));
     }
 
     @Override

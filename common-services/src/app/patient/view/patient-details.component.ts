@@ -9,15 +9,14 @@ import { PatientService } from 'src/app/patient-service/patient.service';
   styleUrls: ['./patient-details.component.css']
 })
 export class PatientDetailsComponent {
-  constructor(private downloadAndPrintService: PrintDownloadService, private patientService: PatientService){}
+  constructor(private downloadAndPrintService: PrintDownloadService, private patientService: PatientService) { }
   medicneForSearch: string = '';
   addNewMedicine = false;
-  newPrescriptions: Prescription= {
+  newPrescriptions: Prescription = {
     prescId: 0,
     prescDate: '',
     medicines: [],
     healthMeasurements: []
-    
   };
   today = new Date();
   showNewPresc = false;
@@ -25,11 +24,11 @@ export class PatientDetailsComponent {
   currentPatient!: Patient
 
   @Input()
-  selectedHistory: PatientHistory  = {
+  selectedHistory: PatientHistory = {
     patientId: this.currentPatient?.patientId,
     lastVisit: new Date().toString(),
     healthDetails: "",
-    notes:"",
+    notes: "",
     prescriptions: [],
   };
 
@@ -39,62 +38,71 @@ export class PatientDetailsComponent {
   @ViewChild('printAble') screen!: ElementRef;
 
   lastHealthMeasurement!: HealthMeasurement[];
-  
-ngOnInit(): void {
-  if(this.selectedHistory.prescriptions.length > 0){
-    this.selectedHistory.prescriptions.forEach((presc: Prescription) =>{
-      if(presc.healthMeasurements.length > 0){
-        this.lastHealthMeasurement = JSON.parse(JSON.stringify(presc.healthMeasurements));
-      }
-    });
-  }
-}
 
-  print(){
+  ngOnInit(): void {
+    if (this.selectedHistory.prescriptions.length > 0) {
+      this.selectedHistory.prescriptions.sort((p1: Prescription, p2: Prescription) => {
+        if (p1.prescId !== undefined && p2.prescId !== undefined) {
+          return p2.prescId - p1.prescId;
+        }else {
+          return 0;
+        }
+      });
+      let firstFound = false;
+      this.selectedHistory.prescriptions.forEach((presc: Prescription) => {
+        if (!firstFound && presc.healthMeasurements.length > 0) {
+          this.lastHealthMeasurement = JSON.parse(JSON.stringify(presc.healthMeasurements));
+          firstFound = true;
+        }
+      });
+    }
+  }
+
+  print() {
     this.downloadAndPrintService.print(this.screen);
   }
-  addNewPrescription(){
+  addNewPrescription() {
     this.addNewPrescriptions.emit()
     this.addNewMedicine = true;
   }
-  backToSelectedHistory(){
+  backToSelectedHistory() {
     this.addNewMedicine = false;
     this.showNewPresc = true;
   }
 
-  selctedMedicineEvent(action: string){
+  selctedMedicineEvent(action: string) {
   }
-  saveAndPrintPresription(newPrescriptions: Prescription){
+  saveAndPrintPresription(newPrescriptions: Prescription) {
     this.newPrescriptions = newPrescriptions;
-    if(this.selectedHistory === undefined){
+    if (this.selectedHistory === undefined) {
       this.selectedHistory = {
         patientId: this.currentPatient?.patientId,
         lastVisit: new Date().toString(),
         healthDetails: "",
-        notes:"",
+        notes: "",
         prescriptions: [],
       };
     };
 
     const newHealthMeasures = JSON.parse(JSON.stringify(this.lastHealthMeasurement));
-    newHealthMeasures.forEach((item: {key:string, id?:number}) =>{
+    newHealthMeasures.forEach((item: { key: string, id?: number }) => {
       delete item.id;
     });
 
     this.newPrescriptions.healthMeasurements = newHealthMeasures;
     delete this.newPrescriptions.prescId;
-    if(this.selectedHistory?.prescriptions){
+    if (this.selectedHistory?.prescriptions) {
       this.selectedHistory?.prescriptions.push(this.newPrescriptions);
-    }else{
+    } else {
       this.selectedHistory.prescriptions = [this.newPrescriptions];
     }
-    this.patientService.saveUpdatePatientHistory(JSON.stringify(this.selectedHistory)).subscribe( res =>{
+    this.patientService.saveUpdatePatientHistory(JSON.stringify(this.selectedHistory)).subscribe(res => {
       console.log(res);
-    } );
+    });
 
     this.backToSelectedHistory();
   }
-  healthMeasureFormGroupData(event: any){
+  healthMeasureFormGroupData(event: any) {
     console.log(event);
   }
 }
