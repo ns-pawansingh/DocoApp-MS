@@ -23,9 +23,10 @@ public class PatientHistory {
     private String healthDetails;
     @Column
     private String notes;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "medicines")
-    private Set<MedicineDetail> medicines;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "prescriptions")
+    private Set<Prescription> prescriptions;
 
     public PatientHistory(Long patientId, String healthDetails, String notes) {
         this.patientId = patientId;
@@ -82,12 +83,12 @@ public class PatientHistory {
         this.notes = notes;
     }
 
-    public Set<MedicineDetail> getMedicines() {
-        return medicines;
+    public Set<Prescription> getPrescriptions() {
+        return prescriptions;
     }
 
-    public void setMedicines(Set<MedicineDetail> medicines) {
-        this.medicines = medicines;
+    public void setPrescriptions(Set<Prescription> prescriptions) {
+        this.prescriptions = prescriptions;
     }
 
     public String getHealthMeasurements() {

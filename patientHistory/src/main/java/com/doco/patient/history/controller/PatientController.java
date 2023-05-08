@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("patient/history")
 public class PatientController {
 
@@ -37,6 +36,12 @@ public class PatientController {
 
     @PostMapping("/save")
     public String save(@RequestBody PatientHistory patientDetail) {
+        patientService.save(patientDetail);
+        return Constant.CREATE_SUCCESS;
+    }
+
+    @PostMapping("/update")
+    public String update(@RequestBody PatientHistory patientDetail) {
         patientService.save(patientDetail);
         return Constant.CREATE_SUCCESS;
     }

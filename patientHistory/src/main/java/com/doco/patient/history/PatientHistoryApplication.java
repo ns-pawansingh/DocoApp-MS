@@ -5,6 +5,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 @SpringBootApplication
 @ComponentScan("com.doco")
@@ -15,5 +22,16 @@ public class PatientHistoryApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PatientHistoryApplication.class, args);
 	}
+	@Bean
+	public CorsWebFilter corsWebFilter() {
 
+		final CorsConfiguration corsConfig = new CorsConfiguration();
+		corsConfig.setAllowedOrigins(Collections.singletonList("*"));
+		corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE"));
+		corsConfig.addAllowedHeader("*");
+
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", corsConfig);
+		return new CorsWebFilter(source);
+	}
 }

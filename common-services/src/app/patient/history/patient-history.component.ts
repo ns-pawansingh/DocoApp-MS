@@ -1,5 +1,5 @@
 import { Component, Input,EventEmitter, Output } from '@angular/core';
-import { PatientHistory } from '../patient-search.component';
+import { PatientHistory } from '../search/patient-search.component';
 
 @Component({
   selector: 'app-patient-history',

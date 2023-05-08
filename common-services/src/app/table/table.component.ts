@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Patient } from '../patient/patient-search.component';
+import { Patient } from '../patient/search/patient-search.component';
 
 @Component({
   selector: 'app-table',

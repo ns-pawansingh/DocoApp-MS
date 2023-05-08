@@ -2,15 +2,44 @@ section {
     display: table;
   }
 
-  
-  button{
-    display: table-cell;
-    max-width: 600px;
-    
-  }
+
 html, body { height: 100%; }
 body { 
   margin: 0; 
   font-family: Roboto, "Helvetica Neue", sans-serif; 
   background-color: antiquewhite;
 }
+
+label {
+  font-weight: 700;
+  font-family: 'Times New Roman', Times, serif;
+  width: 100px;
+}
+.madicine-name{
+  font-weight: 700;
+  font-family: 'Times New Roman', Times, serif;
+  width: 250px !important;
+}
+
+.madicine-notes{
+  font-weight: 200;
+  font-family: 'Times New Roman', Times, serif;
+  color: rgb(84, 10, 168);
+  margin-left: 50px;
+  width: 300px !important;
+}
+
+.presc-date-class{
+  font-size: 15px !important;
+  margin: 0px 0px 5px 0px !important;
+  
+  font-weight: 600 !important;
+
+}
+hr{
+  margin: 5px 0px 5px 0px  !important;
+}
+
+
+
+

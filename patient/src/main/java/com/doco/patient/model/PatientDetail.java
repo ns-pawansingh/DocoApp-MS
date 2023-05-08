@@ -18,12 +18,21 @@ public class PatientDetail {
     private String email;
     private String address;
 
-    public PatientDetail(Long patientId, String patientName, String phone, String email, String address) {
+    private String gender;
+
+    private String age;
+    public PatientDetail(Long patientId, String patientName, String phone, String email, String address, String gender, String age) {
         this.patientId = patientId;
         this.patientName = patientName;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.gender = gender;
+        this.age = age;
+    }
+
+    public PatientDetail(Long patientId, String patientName, String phone, String email, String address) {
+        this(patientId, patientName, phone, email, address, "", "");
     }
 
     public PatientDetail(Long id, String patientName, String phone) {
@@ -71,5 +80,21 @@ public class PatientDetail {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     }
 }

@@ -5,23 +5,14 @@
         </mat-card-header>
         <mat-card-content>
             <app-personal-details [currentPatient]="currentPatient"></app-personal-details>
-            <div style="width: 50%; float:right;">
-                <app-health-measures [healthMeasures]="lastHealthMeasurement"></app-health-measures>
-            </div>
+            <app-health-measures [healthMeasures]="[]" (healthMeasureFormGroupData)="healthMeasureFormGroupData($event)"></app-health-measures>
         </mat-card-content>
         <mat-card-content>
-            <div *ngFor="let presc of selectedHistory?.prescriptions">
+            <div *ngFor="let presc of newHistory?.prescriptions">
                 <hr>
                 <mat-card-header>
                     <mat-card-title class="presc-date-class">{{presc.prescDate}}</mat-card-title>
                 </mat-card-header>
-                <span *ngFor="let measure of presc.healthMeasurements">
-                    <b>{{measure.key}}</b>:
-                        {{measure.value}} &nbsp;&nbsp;&nbsp;&nbsp;
-                </span>
-                <span *ngIf="presc.healthMeasurements.length > 0">
-                    <hr>
-                </span>
                 <div *ngFor="let medicine of presc?.medicines">
                     <label class="madicine-name">{{medicine.name}} </label>
                     {{medicine.dose}} 
@@ -30,16 +21,12 @@
             </div>
         </mat-card-content>
 
-        <ng-template [ngIf]="addNewMedicine === true">
+        <div>
             <app-prescription-add (saveMedicineInNewPrescription)="saveAndPrintPresription($event)"
                 (selctedMedicineEvent)="selctedMedicineEvent($event)"></app-prescription-add>
-        </ng-template>
+        </div>
     </mat-card>
 </div>
-
-<div *ngIf="!addNewMedicine">
-    <button class="btn btn-primary" (click)="addNewPrescription()">Add New Prescriptions</button>
-</div>
 <div>
-    <button class="btn btn-info"  (click)="print()">Print and download</button>
+    <button class="btn btn-info"  (click)="saveAndPrint()">Save & Print</button>
 </div>

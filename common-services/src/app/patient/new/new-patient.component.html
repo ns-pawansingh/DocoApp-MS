@@ -1,0 +1,57 @@
+<mat-horizontal-stepper linear>
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+            <div class="user-registration-form">
+                  <div class="form-group">
+                        <label for="patientName">Name:</label>
+                        <input type="text" id="patientName" name="patientName" formControlName="patientName" />
+                  </div>
+                  <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" formControlName="age" />
+                  </div>
+                  <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <select type="text" id="gender" name="gender" formControlName="gender">
+                              <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
+                        </select>
+                  </div>
+                  <div class="form-group">
+                        <label for="phone">Phone:</label>
+                        <input type="text" id="phone" name="phone"formControlName="phone" />
+                  </div>
+                  <div class="form-group">
+                        <label for="address">Address:</label>
+                        <textarea  formControlName="address">
+                    </textarea>
+                  </div>
+                  <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" formControlName="email">
+                  </div>
+            </div>
+          <button mat-button matStepperNext>Next</button>
+          <button class="btn btn-primary" (click)="savePatient()">Save</button>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+            <div class="user-registration-form">
+                  <div class="form-group" *ngFor="let field of fields">
+                        <label for="{{field.key}}">{{field.key}}:</label>
+                        <input type="text" [id]="field.key" [name]="field.key" [formControlName]="field.key">
+                        <div class="error" *ngIf="secondFormGroup.get(field.key)?.touched &&
+                        secondFormGroup.get(field.id)?.invalid">Required</div>
+                  </div>
+            </div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </form>
+      </mat-step>
+      <mat-step>
+      <button class="btn btn-secondary" (click)="savePatient()">Preview</button>
+      <button class="btn btn-primary" (click)="savePatient()">Save</button>
+        <button mat-button matStepperPrevious>Back</button>
+      </mat-step>
+    </mat-horizontal-stepper>
+    

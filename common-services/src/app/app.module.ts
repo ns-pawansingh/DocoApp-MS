@@ -25,7 +25,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FooterComponent } from './footer/footer.component';
 import {MatSelectModule} from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PatientSearchComponent } from './patient/patient-search.component';
+import { PatientSearchComponent } from './patient/search/patient-search.component';
 import { MedicineCreateComponent } from './medicine/create/medicine-create.component';
 import { MedicineDetailsComponent } from './medicine/view/medicine-details.component';
 import { MedicineSearchComponent } from './medicine/search/medicine-search.component';
@@ -36,11 +36,17 @@ import { PrintPrescriptionComponent } from './print/print-prescription.component
 import { AppointmentComponent } from './appointment/appointment.component';
 import { MedicineComponent } from './medicine/medicine.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { TableComponent } from './table/table.component';
 import { HttpClientModule } from '@angular/common/http';
-import { NewPrescriptionsComponent } from './patient/new-presc/new-prescriptions.component';
+import { NewPrescriptionsComponent } from './patient/prescription-add/prescription-add.component';
+import { NewPatientComponent } from './patient/new/new-patient.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatInputModule } from '@angular/material/input';
+import { NewPrescriptionComponent } from './patient/new-prescription/new-prescription.component';
+import { PersonalDetailsComponent } from './patient/personal-details/personal-details.component';
+import { HealthMeasuresComponent } from './patient/health-measures/health-measures.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +64,10 @@ import { NewPrescriptionsComponent } from './patient/new-presc/new-prescriptions
     MedicineComponent,
     TableComponent,
     NewPrescriptionsComponent,
+    NewPatientComponent,
+    NewPrescriptionComponent,
+    PersonalDetailsComponent,
+    HealthMeasuresComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,7 +94,8 @@ import { NewPrescriptionsComponent } from './patient/new-presc/new-prescriptions
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
-    HttpClientModule
+    HttpClientModule,
+    MatStepperModule
     
   ],
   providers: [],

@@ -1,18 +1,24 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { PatientMedicine } from '../patient-search.component';
+import { PatientMedicine, Prescription } from '../search/patient-search.component';
 import { Observable } from 'rxjs';
 
 import {map, startWith} from 'rxjs/operators';
 
 @Component({
-  selector: 'app-new-prescriptions',
-  templateUrl: './new-prescriptions.component.html',
-  styleUrls: ['./new-prescriptions.component.css']
+  selector: 'app-prescription-add',
+  templateUrl: './prescription-add.component.html',
+  styleUrls: ['./prescription-add.component.css']
 })
 export class NewPrescriptionsComponent {
 
-  newPrescriptions: PatientMedicine[] = [];
+  @Input('prescription')
+  newPrescriptions: Prescription = {
+    prescId: 0,
+    prescDate: new Date().toDateString(),
+    medicines: [],
+    healthMeasurements: []
+  };
 
   @Output()
   saveMedicineInNewPrescription = new EventEmitter<any>();
@@ -23,7 +29,6 @@ export class NewPrescriptionsComponent {
   @Output()
   selctedMedicineEvent = new EventEmitter<any>();
 
-
   ngOnInit() {
     this.medicineList$ = this.medicineControl.valueChanges.pipe(
       startWith(''),
@@ -32,7 +37,6 @@ export class NewPrescriptionsComponent {
   }
 
   filterPatient(value: string): PatientMedicine[] {
-    alert(value);
     //API call to fetch medicine list
     const filterValue = value.toLowerCase();
     return [];
@@ -44,26 +48,33 @@ export class NewPrescriptionsComponent {
   saveNewMedicine(){
     let name = this.medicineControl.value == null ? '' : this.medicineControl.value;
     this.prepareNewPrescriptionsData(name)
-    console.log("saveNewMedicine: "+this.medicineControl.value);
   }
   medicineSelected(){
     let name = this.medicineControl.value == null ? '' : this.medicineControl.value;
-    this.prepareNewPrescriptionsData(name)
-    console.log("medicineSelected: "+ this.medicineControl.value);
+    this.medicineControl = new FormControl('');
+    this.prepareNewPrescriptionsData(name);
   }
 
   prepareNewPrescriptionsData(medicineName : string){
-    const newPrescriptionRow = {
-      id: 0,
+    const newMedicineRow : PatientMedicine = {
       name:  medicineName,
       dose: '',
       notes: ''
     }
-    this.newPrescriptions.push(newPrescriptionRow);
+    let pushToMedicines = true;
+    this.newPrescriptions.medicines.forEach((item: PatientMedicine) => {
+      if(item.name === medicineName){
+        pushToMedicines = false;
+      }
+    });
+    if(pushToMedicines){
+      this.newPrescriptions.medicines.push(newMedicineRow);
+    }
   }
 
   saveAndPrintPresription(){
-    alert(this.newPrescriptions)
-    this.saveMedicineInNewPrescription.emit(this.newPrescriptions);
+    const newPresc = {...this.newPrescriptions};
+    this.saveMedicineInNewPrescription.emit(newPresc);
+    this.newPrescriptions.medicines = [];
   }
 }
