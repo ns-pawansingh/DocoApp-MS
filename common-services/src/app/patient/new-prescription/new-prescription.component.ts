@@ -13,7 +13,15 @@ export class NewPrescriptionComponent {
 
   @Input('currentPatient')
   currentPatient!: Patient;
-  newHistory: PatientHistory | undefined;
+  newHistory: PatientHistory = {
+    patientId: 0,
+    lastVisit: new Date().toISOString(),
+    healthDetails: '',
+    notes: '',
+    prescriptions: []
+  };
+  
+  prescOtherDetails = '';
   healthMeasures: HealthMeasurement[] = [];
   ngOnInit(): void {
     const storedCurrentPatient = sessionStorage.getItem("currentPatient");
@@ -24,28 +32,20 @@ export class NewPrescriptionComponent {
   }
 
   saveAndPrintPresription(newPrescriptions: Prescription){
-    if(this.newHistory === undefined){
-      this.newHistory = {
-        patientId: this.currentPatient?.patientId,
-        lastVisit: new Date().toISOString(),
-        healthDetails: "",
-        notes:"",
-        prescriptions: [],
-      };
-    }
     if(this.newHistory?.prescriptions.length > 0){
       this.newHistory?.prescriptions[0]?.medicines.push(...newPrescriptions.medicines);
     }else{
       this.newHistory.prescriptions = [newPrescriptions];
     }
     delete this.newHistory.prescriptions[0].prescId;
-    this.newHistory.prescriptions[0].healthMeasurements = this.healthMeasures;
+    this.newHistory.patientId = this.currentPatient.patientId;
+    this.newHistory.prescriptions[0].healthMeasurements = this.healthMeasures.filter((item:{value:string}) => {
+      return item.value !== undefined && item.value !== null && item.value !== '';
+    });
     this.patientService.saveUpdatePatientHistory(JSON.stringify(this.newHistory)).subscribe(res =>{
 
     })
   }
-
-
   saveAndPrint(){
     console.log("saveAndPrint clicked");
   }

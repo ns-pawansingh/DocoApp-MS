@@ -1,20 +1,17 @@
 
- <div>
-  <button class="btn btn-primary" (click)="saveAndPrintPresription()">Save</button>
-</div>
+
  <div class="form-control">
 <input type="text" class="form-control"
          placeholder="Search for a Medicine"
          [formControl]="medicineControl"
          [matAutocomplete]="auto"
-         class="example-input"
-         (keypress)="searchForMedicine()" >
-         <button class="btn btn-primary" (click)="saveNewMedicine()">Add New</button> 
+         class="example-input">
+         <button class="btn btn-primary" *ngIf="!isMedicineAvailableInList" (click)="saveNewMedicine()">Add</button> 
         </div> 
             
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="medicineSelected()">
     <!-- <mat-option *ngFor="let medicine of medicineList$ | async" [value]="medicine"> -->
-    <mat-option *ngFor="let medicine of medicineListOptions" [value]="medicine">
+    <mat-option *ngFor="let medicine of filteredOptions|async" [value]="medicine">
       {{medicine}}
     </mat-option>
   </mat-autocomplete>
@@ -22,8 +19,11 @@
   <div *ngFor="let newPres of newPrescriptions.medicines">
     <div>
         <label class="madicine-name">{{newPres.name}}</label>
-        <label >Dose</label> : <input type="text" [(ngModel)]="newPres.dose">
-        <label>Notes</label> : <input type="text" [(ngModel)]="newPres.notes">
+        <label class="presc">Dose</label> : <input type="text" [(ngModel)]="newPres.dose">
+        <label class="presc">Notes</label> : <input type="text" [(ngModel)]="newPres.notes">
     </div>
 
+  </div>
+  <div>
+    <button class="btn btn-primary" (click)="saveAndPrintPresription()">Save</button>
   </div>

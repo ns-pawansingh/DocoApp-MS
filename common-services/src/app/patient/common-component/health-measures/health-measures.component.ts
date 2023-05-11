@@ -13,19 +13,30 @@ export class HealthMeasuresComponent {
   @Input()
   healthMeasures: {id?:number, key:string, value:string}[] = [];
 
+  @Input('disabled')
+  isHealthMesaureDisabled = true;
+
   @Output()
   healthMeasureFormGroupData: EventEmitter<any> = new EventEmitter();
 
   constructor(private activateRouter:ActivatedRoute, private formBuilder: FormBuilder){}
   newFields: {id?:number,key : string,value:string}[]=[];
 
+  ngOnInit(): void {
+    
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    
+  }
+
   addMeasure(){
     const newField = {key : '',value:''};
     this.newFields.push(newField);
   }
 
-  saveNewHealthMeasure(){    
+  saveNewHealthMeasure(){
     this.healthMeasures.push(...this.newFields);
+    this.healthMeasures = this.healthMeasures.filter((measure: {key:string, value:string}) => measure.key !== '' && measure.value !== '');
     this.updateHealthMeasures();
     this.newFields = [];
   }

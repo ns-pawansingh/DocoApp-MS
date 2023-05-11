@@ -15,10 +15,15 @@ label {
   font-family: 'Times New Roman', Times, serif;
   width: 100px;
 }
-.madicine-name{
+
+label.presc{
+  margin-left: 25px;
+  width: auto !important;
+}
+label.madicine-name{
   font-weight: 700;
   font-family: 'Times New Roman', Times, serif;
-  width: 250px !important;
+  width: 175px !important;
 }
 
 .madicine-notes{
@@ -31,11 +36,22 @@ label {
 
 .presc-date-class{
   font-size: 15px !important;
-  margin: 0px 0px 5px 0px !important;
-  
+  margin: 0px 0px 5px 20px !important;
   font-weight: 600 !important;
+  color:chocolate !important;
 
 }
+
+
+.health-measure{
+  font-size: 14px !important;
+  margin: 10px !important;
+  font-weight: 400 !important;
+  color:rgb(36, 20, 8) !important;
+  background-color: cadetblue;
+
+}
+
 hr{
   margin: 5px 0px 5px 0px  !important;
 }
@@ -43,7 +59,6 @@ hr{
 button{
   margin: 5px !important;
 }
-
 
 
 

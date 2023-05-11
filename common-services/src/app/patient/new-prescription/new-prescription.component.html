@@ -7,9 +7,20 @@
             <mat-card-title>{{currentPatient.patientName}}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <app-personal-details [currentPatient]="currentPatient"></app-personal-details>
-            <app-health-measures [healthMeasures]="healthMeasures" (healthMeasureFormGroupData)="healthMeasureFormGroupData($event)"></app-health-measures>
+            <div  style="float:left; width: 65%;">
+                <app-personal-details [currentPatient]="currentPatient">
+                    <label style="width: 100% !important;" for="healthCondition">Health Condition: </label>
+                    <textarea type="text" cols="50" rows="4" [(ngModel)]="newHistory.healthDetails"></textarea>
+                </app-personal-details>
+            </div>
+            <div style="float:right; width: 35%;">
+                <app-health-measures [healthMeasures]="healthMeasures" [disabled]="false" (healthMeasureFormGroupData)="healthMeasureFormGroupData($event)">
+                </app-health-measures>
+            </div>
+            
+            
         </mat-card-content>
+
         <mat-card-content>
             <div *ngFor="let presc of newHistory?.prescriptions">
                 <hr>

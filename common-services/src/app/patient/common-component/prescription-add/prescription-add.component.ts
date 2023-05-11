@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { PatientMedicine, Prescription } from '../search/patient-search.component';
+import { PatientMedicine, Prescription } from '../../search/patient-search.component';
 import { Observable } from 'rxjs';
 
 import {map, startWith} from 'rxjs/operators';
@@ -23,23 +23,30 @@ export class NewPrescriptionsComponent {
   @Output()
   saveMedicineInNewPrescription = new EventEmitter<any>();
 
-  medicineList$!: Observable<PatientMedicine[]>;
-  medicineListOptions = ['Dolo', 'D-cold', 'Anacine', 'Disprin', 'Nicip', 'Introcqunal', 'Generic', 'SolvinCold Syr']
+  filteredOptions!: Observable<String[]>;
+  options:string[] = [];
   medicineControl = new FormControl('');
+  isMedicineAvailableInList = true;
   @Output()
   selctedMedicineEvent = new EventEmitter<any>();
 
   ngOnInit() {
-    this.medicineList$ = this.medicineControl.valueChanges.pipe(
+    this.options = ['Dolo', 'D-cold', 'Anacine', 'Disprin', 'Nicip', 'Introcqunal', 'Generic', 'SolvinCold Syr']
+  
+    this.filteredOptions = this.medicineControl.valueChanges.pipe(
       startWith(''),
-      map(value => this.filterPatient(value || '')),
+      map(value => this.filterMedicine(value || '')),
     );
   }
 
-  filterPatient(value: string): PatientMedicine[] {
-    //API call to fetch medicine list
+  filterMedicine(value: string): string[] {
+    this.isMedicineAvailableInList = true;
     const filterValue = value.toLowerCase();
-    return [];
+    let medicineList = this.options.filter(option => (option.toLowerCase().includes(filterValue)));
+    if(medicineList.length === 0){
+      this.isMedicineAvailableInList = false;
+    }
+    return medicineList;
   }
 
   searchForMedicine(){
@@ -51,7 +58,7 @@ export class NewPrescriptionsComponent {
   }
   medicineSelected(){
     let name = this.medicineControl.value == null ? '' : this.medicineControl.value;
-    this.medicineControl = new FormControl('');
+    this.medicineControl.patchValue('');
     this.prepareNewPrescriptionsData(name);
   }
 

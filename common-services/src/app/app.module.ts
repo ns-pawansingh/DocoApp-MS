@@ -39,13 +39,13 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { TableComponent } from './table/table.component';
 import { HttpClientModule } from '@angular/common/http';
-import { NewPrescriptionsComponent } from './patient/prescription-add/prescription-add.component';
+import { NewPrescriptionsComponent } from './patient/common-component/prescription-add/prescription-add.component';
 import { NewPatientComponent } from './patient/new/new-patient.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatInputModule } from '@angular/material/input';
 import { NewPrescriptionComponent } from './patient/new-prescription/new-prescription.component';
-import { PersonalDetailsComponent } from './patient/personal-details/personal-details.component';
-import { HealthMeasuresComponent } from './patient/health-measures/health-measures.component';
+import { PersonalDetailsComponent } from './patient/common-component/personal-details/personal-details.component';
+import { HealthMeasuresComponent } from './patient/common-component/health-measures/health-measures.component';
 
 @NgModule({
   declarations: [

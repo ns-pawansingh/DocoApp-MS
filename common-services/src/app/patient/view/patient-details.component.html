@@ -7,24 +7,29 @@
             <mat-card-title>{{currentPatient.patientName}}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <app-personal-details [currentPatient]="currentPatient"></app-personal-details>
+            <div style="width: 50%; float:left;">
+                <app-personal-details [currentPatient]="currentPatient">
+                    <label style="width: 100% !important;" for="healthCondition">Health Condition: </label>
+                    <textarea [disabled]="isHealthDetailsDisable"  type="text" cols="35" rows="4" [(ngModel)]="selectedHistory.healthDetails"></textarea>
+                </app-personal-details>
+            </div>
+           
             <div style="width: 50%; float:right;">
-                <app-health-measures [healthMeasures]="lastHealthMeasurement"></app-health-measures>
+                <app-health-measures [disabled]="isHealthDetailsDisable" 
+                [healthMeasures]="lastHealthMeasurement"></app-health-measures>
             </div>
         </mat-card-content>
         <mat-card-content>
             <div *ngFor="let presc of selectedHistory?.prescriptions">
                 <hr>
-                <mat-card-header>
                     <mat-card-title class="presc-date-class">{{presc.prescDate}}</mat-card-title>
-                </mat-card-header>
-                <span *ngFor="let measure of presc.healthMeasurements">
-                    <b>{{measure.key}}</b>:
+                <div class="health-measure">
+                    <span  *ngFor="let measure of presc.healthMeasurements">
+                        <b>{{measure.key}}</b>:
                         {{measure.value}} &nbsp;&nbsp;&nbsp;&nbsp;
-                </span>
-                <span *ngIf="presc.healthMeasurements.length > 0">
-                    <hr>
-                </span>
+                    </span>
+                    
+                </div>
                 <div *ngFor="let medicine of presc?.medicines">
                     <label class="madicine-name">{{medicine.name}} </label>
                     {{medicine.dose}} 

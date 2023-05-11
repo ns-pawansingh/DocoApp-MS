@@ -1,14 +1,15 @@
-<div style="float:right;">
+<div>
       <label style="width: 100% !important; margin: 10px;">
             Health Measures
       </label>
       <div class="user-registration-form">
             <div class="form-group" *ngFor="let field of healthMeasures">
                   <label for="{{field.key}}">{{field.key}}:</label>
-                  <input type="text" [id]="field.key" [name]="field.key" [(ngModel)]="field.value">
+                  <input type="text" [id]="field.key" [name]="field.key" [(ngModel)]="field.value"  [disabled]="isHealthMesaureDisabled">
             </div>
       </div>
       <div class="user-registration-form">
+           
             <div class="form-group" *ngFor="let newField of newFields">
                   <label for="{{newField.key}}">
                         <input placeholder="Unit" style="width: 70px !important;" type="text" [id]="newField.key"
@@ -25,12 +26,14 @@
                                     d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
                         </svg>
                   </button>
-            </div>
 
+            </div>
+            <ng-content></ng-content>
             <div>
-                  <button class="btn btn-primary" (click)="saveNewHealthMeasure()">Update</button>
-                  <button class="btn btn-info" (click)="addMeasure()"> Add
+                  <button class="btn btn-primary" (click)="saveNewHealthMeasure()" [disabled]="isHealthMesaureDisabled">Update</button>
+                  <button class="btn btn-info" (click)="addMeasure()" [disabled]="isHealthMesaureDisabled"> Add
                   </button>
             </div>
       </div>
+      
 </div>
